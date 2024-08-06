@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+{% block title %}Signup | User Registration{% endblock %}
+{% block content %}
+
+<form method="POST">
+        {% csrf_token %}
+        {{ profile_form.as_p }}
+        <button type="submit">Save changes</button>
+    </form>
+    <a href="{% url 'profile' %}">Back to Profile</a>
+{% endblock %}

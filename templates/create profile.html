@@ -1,0 +1,25 @@
+
+
+
+
+{% extends 'base.html' %}
+{% block title %}Signup | User Registration{% endblock %}
+{% block content %}
+
+
+    <h2>Create Profile</h2>
+    <form  method="post" enctype="multipart/form-data">
+  <div class="form-group">
+
+      {% csrf_token %}
+        {{ form.as_p }}
+        <p>{{form.instance.profile_picture}}</p>
+
+        {% if form.instance.profile_picture %}
+            <img src="{{ form.instance.profile_picture.url}}" height="300px" width="200px">
+        {% endif %}
+  </div>
+  <button type="submit" class="form-btn btn-primary">Submit</button>
+</form>
+
+{% endblock%}

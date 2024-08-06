@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}Profile Page| User Registration{% endblock %}
+{% block content %}
+<h1>Successfully login</h1>
+
+		<form method="post" action="{% url 'logout' %}">
+            {% csrf_token%}
+			<input type="submit" value="Logout" id="button">
+        </form><br><br>
+<a href="{% url 'profile_page_click' %}">
+           <input type="button" value="profile page show">
+</a>
+
+
+{% endblock%}
