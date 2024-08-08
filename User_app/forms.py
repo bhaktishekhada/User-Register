@@ -14,10 +14,12 @@ class SignUpForm(UserCreationForm):
 class ProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
-        fields = ( 'birthdate', 'gender', 'city','profile_picture')
+        fields = ('birthdate', 'gender', 'city', 'profile_picture')
 
 
 class UpdateProfileForm(forms.ModelForm):
     class Meta:
         model = UserProfile
         fields = "__all__"
+
+

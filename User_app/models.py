@@ -2,6 +2,7 @@ import self
 from django.db import models
 from django.contrib.auth.models import User
 from django.template.backends import django
+from django.db import models
 
 
 # Create your models here.
@@ -23,8 +24,10 @@ class UserProfile(models.Model):
     birthdate = models.DateField(null=True)
     gender = models.CharField(max_length=100, null=True)
     city = models.CharField(max_length=100, null=True)
-    profile_picture = models.ImageField(upload_to='profile_picture/')
+    profile_picture = models.ImageField(upload_to='profile_picture/',null=True)
 
     def __str__(self):
         # return f"{self.user} {self.birthdate} {self.gender} {self.city}"
         return self.user.username
+
+

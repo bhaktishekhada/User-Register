@@ -63,8 +63,8 @@ def button_click_view(request):
 
 def profile_page_click(request):
     if request.method == 'POST':
-        user_profile,created=UserProfile.objects.get_or_create(user=request.user)
-        form = ProfileForm(request.POST,request.FILES, instance=user_profile)
+        user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+        form = ProfileForm(request.POST, request.FILES, instance=user_profile)
         if form.is_valid():
             form.save()
             return redirect('next')
@@ -75,8 +75,8 @@ def profile_page_click(request):
         except Exception as e:
             print(e)
         form = ProfileForm(instance=userprofile)
-        context={'form': form}
-    return render(request, 'create profile.html',{'form': form})
+        context = {'form': form}
+    return render(request, 'create profile.html', {'form': form})
 
 
 def create_profile(request):
