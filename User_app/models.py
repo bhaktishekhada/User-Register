@@ -25,6 +25,7 @@ class UserProfile(models.Model):
     gender = models.CharField(max_length=100, null=True)
     city = models.CharField(max_length=100, null=True)
     profile_picture = models.ImageField(upload_to='profile_picture/',null=True)
+    video = models.FileField(upload_to='videos_uploaded', null=True)
 
     def __str__(self):
         # return f"{self.user} {self.birthdate} {self.gender} {self.city}"

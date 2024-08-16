@@ -19,12 +19,16 @@ from django.urls import path
 
 urlpatterns = [
     path('', views.signup_view, name='signup'),
+    path("cbv/", views.SignUpView.as_view(), name="cbv_signup_view"),
     path('login', views.login_view, name='login'),
+    path('cbv/', views.LoginView.as_view(), name="cbv_login_view"),
     path('next', views.next_view, name='next'),
     path('logout', views.logout_view, name='logout'),
     path('button-click', views.button_click_view, name='button_click'),
     path('profile-page-click', views.profile_page_click, name='profile_page_click'),
+    path('cbv/' ,views.ProfilePageView.as_view(), name="cbv_profile_page_view" ),
     path('create', views.create_profile, name='create_profile'),
     path('update_profile', views.update_profile_view, name='update_profile'),
-
+    path('cbv/', views.UpdateProfileView.as_view(), name="cbv_update_profile_view"),
+    path('upload/', views.upload_video, name='upload_video'),
 ]

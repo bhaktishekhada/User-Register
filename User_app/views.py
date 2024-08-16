@@ -6,9 +6,10 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views.generic import TemplateView, FormView
 from pyexpat.errors import messages
 
-from .forms import SignUpForm, ProfileForm, UpdateProfileForm
+from .forms import SignUpForm, ProfileForm, UpdateProfileForm, VideoForm
 from django.views.decorators.cache import never_cache
 # from .models import Profile
 # from .forms import ProfileForm
@@ -40,6 +41,7 @@ def login_view(request):
             # username = request.POST
             login(request, user)
             return redirect('next')
+        return render(request, 'index.html')
     else:
         return render(request, 'index.html')
 
@@ -98,3 +100,44 @@ def update_profile_view(request):
         else:
             profile_form = UpdateProfileForm(instance=request.user.userprofile)
         return render(request, 'update_profile.html', {'profile_form': profile_form})
+
+
+def upload_video(request):
+    if request.method == 'POST':
+        form = VideoForm(request.POST, request.FILES)
+        if form.is_valid():
+            form.save()
+            return redirect('profile')
+        else:
+            form = VideoForm()
+        return render(request, 'create_profile.html', {'form': form})
+
+
+class SignUpView(FormView):
+    template_name = "home.html"
+    form_class = SignUpForm
+    success_url = "login"
+
+
+class LoginView(FormView):
+    template_name = "index.html"
+    form_class = SignUpForm
+    success_url = "next"
+
+
+class ProfilePageView(FormView):
+    template_name = "create profile.html"
+    form_class = ProfileForm
+    success_url = "next"
+
+
+class UpdateProfileView(FormView):
+    template_name = 'update_profile.html'
+    form_class = UpdateProfileForm
+    success_url = 'profile'
+
+
+class UploadVideoView(FormView):
+    template_name = 'create_profile.html'
+    form_class = VideoForm
+    success_url = 'profile'

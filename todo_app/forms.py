@@ -6,4 +6,8 @@ from todo_app.models import Todo
 class TodoForm(forms.ModelForm):
     class Meta:
         model = Todo
-        fields = "__all__"
+        fields = ('title', 'details', 'due_date')
+
+
+
+
