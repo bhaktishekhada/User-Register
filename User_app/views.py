@@ -6,6 +6,7 @@ from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth import authenticate
 from django.http import HttpResponse
 from django.shortcuts import render, redirect
+from django.views import View
 from django.views.generic import TemplateView, FormView
 from pyexpat.errors import messages
 
@@ -141,3 +142,75 @@ class UpdateProfileView(FormView):
 #     template_name = 'create_profile.html'
 #     form_class = VideoForm
 #     success_url = 'profile'
+
+
+class MultiFunctionView(View):
+
+    def get(self, request, *args, **kwargs):
+        action = kwargs.get('action')
+
+        if action == 'signup':
+            form = SignUpForm()
+            return render(request, 'home.html', {'form': form})
+
+        elif action == 'login':
+            return render(request, 'index.html')
+
+        elif action == 'next':
+            return render(request, 'next.html')
+
+        elif action == 'logout':
+            logout(request)
+            return redirect('signup')
+
+        elif action == 'create_profile':
+            userprofile = None
+            try:
+                userprofile = request.user.userprofile
+            except UserProfile.DoesNotExist:
+                userprofile = UserProfile(user=request.user)
+                userprofile.save()
+
+            form = ProfileForm(instance=userprofile)
+            return render(request, 'create_profile.html', {'form': form})
+
+        elif action == 'update_profile':
+            profile_form = UpdateProfileForm(instance=request.user.userprofile)
+            return render(request, 'update_profile.html', {'profile_form': profile_form})
+
+        elif action == 'button_click':
+            return redirect('login')
+
+    def post(self, request, *args, **kwargs):
+        action = kwargs.get('action')
+
+        if action == 'signup':
+            form = SignUpForm(request.POST)
+            if form.is_valid():
+                form.save()
+                return redirect('login')
+            return render(request, 'home.html', {'form': form})
+
+        elif action == 'login':
+            username = request.POST['username']
+            password = request.POST['password']
+            user = authenticate(request, username=username, password=password)
+            if user is not None:
+                login(request, user)
+                return redirect('next')
+            return render(request, 'index.html')
+
+        elif action == 'create_profile':
+            user_profile, created = UserProfile.objects.get_or_create(user=request.user)
+            form = ProfileForm(request.POST, request.FILES, instance=user_profile)
+            if form.is_valid():
+                form.save()
+                return redirect('next')
+            return render(request, 'create_profile.html', {'form': form})
+
+        elif action == 'update_profile':
+            profile_form = UpdateProfileForm(request.POST, instance=request.user.userprofile)
+            if profile_form.is_valid():
+                profile_form.save()
+                return redirect('profile')
+            return render(request, 'update_profile.html', {'profile_form': profile_form})

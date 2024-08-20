@@ -17,6 +17,8 @@ Including another URLconf
 from User_app import views
 from django.urls import path
 
+from User_app.views import MultiFunctionView
+
 urlpatterns = [
     path('', views.signup_view, name='signup'),
     path("cbv/", views.SignUpView.as_view(), name="cbv_signup_view"),
@@ -31,4 +33,14 @@ urlpatterns = [
     path('update_profile', views.update_profile_view, name='update_profile'),
     path('cbv/', views.UpdateProfileView.as_view(), name="cbv_update_profile_view"),
     # path('upload/', views.upload_video, name='upload_video'),
+
+
+
+    path('signup/', MultiFunctionView.as_view(), {'action': 'signup'}, name='signup'),
+    path('login/', MultiFunctionView.as_view(), {'action': 'login'}, name='login'),
+    path('next/', MultiFunctionView.as_view(), {'action': 'next'}, name='next'),
+    path('logout/', MultiFunctionView.as_view(), {'action': 'logout'}, name='logout'),
+    path('create_profile/', MultiFunctionView.as_view(), {'action': 'create_profile'}, name='create_profile'),
+    path('update_profile/', MultiFunctionView.as_view(), {'action': 'update_profile'}, name='update_profile'),
+    path('button_click/', MultiFunctionView.as_view(), {'action': 'button_click'}, name='button_click'),
 ]
