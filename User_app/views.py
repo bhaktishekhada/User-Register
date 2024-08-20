@@ -9,7 +9,7 @@ from django.shortcuts import render, redirect
 from django.views.generic import TemplateView, FormView
 from pyexpat.errors import messages
 
-from .forms import SignUpForm, ProfileForm, UpdateProfileForm, VideoForm
+from .forms import SignUpForm, ProfileForm, UpdateProfileForm
 from django.views.decorators.cache import never_cache
 # from .models import Profile
 # from .forms import ProfileForm
@@ -102,15 +102,15 @@ def update_profile_view(request):
         return render(request, 'update_profile.html', {'profile_form': profile_form})
 
 
-def upload_video(request):
-    if request.method == 'POST':
-        form = VideoForm(request.POST, request.FILES)
-        if form.is_valid():
-            form.save()
-            return redirect('profile')
-        else:
-            form = VideoForm()
-        return render(request, 'create_profile.html', {'form': form})
+# def upload_video(request):
+#     if request.method == 'POST':
+#         form = VideoForm(request.POST, request.FILES)
+#         if form.is_valid():
+#             form.save()
+#             return redirect('profile')
+#         else:
+#             form = VideoForm()
+#         return render(request, 'create_profile.html', {'form': form})
 
 
 class SignUpView(FormView):
@@ -137,7 +137,7 @@ class UpdateProfileView(FormView):
     success_url = 'profile'
 
 
-class UploadVideoView(FormView):
-    template_name = 'create_profile.html'
-    form_class = VideoForm
-    success_url = 'profile'
+# class UploadVideoView(FormView):
+#     template_name = 'create_profile.html'
+#     form_class = VideoForm
+#     success_url = 'profile'

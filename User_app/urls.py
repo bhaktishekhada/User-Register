@@ -30,5 +30,5 @@ urlpatterns = [
     path('create', views.create_profile, name='create_profile'),
     path('update_profile', views.update_profile_view, name='update_profile'),
     path('cbv/', views.UpdateProfileView.as_view(), name="cbv_update_profile_view"),
-    path('upload/', views.upload_video, name='upload_video'),
+    # path('upload/', views.upload_video, name='upload_video'),
 ]

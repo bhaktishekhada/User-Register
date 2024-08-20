@@ -23,10 +23,10 @@ class ProfileForm(forms.ModelForm):
         fields = ('birthdate', 'gender', 'city', 'profile_picture')
 
 
-class VideoForm(forms.ModelForm):
-    class Meta:
-        model = UserProfile
-        fields = ('video',)
+# class VideoForm(forms.ModelForm):
+#     class Meta:
+#         model = UserProfile
+#         fields = ('video',)
 
 
 class UpdateProfileForm(forms.ModelForm):
