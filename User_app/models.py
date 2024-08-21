@@ -19,8 +19,11 @@ from django.db import models
 #         return f"{self.username} {self.email} {self.password}"
 
 
+
+
 class UserProfile(models.Model):
     user = models.OneToOneField(User, on_delete=models.CASCADE)
+    user = models.ManyToManyField(User, related_name='user_profiles')
     birthdate = models.DateField(null=True)
     gender = models.CharField(max_length=100, null=True)
     city = models.CharField(max_length=100, null=True)
